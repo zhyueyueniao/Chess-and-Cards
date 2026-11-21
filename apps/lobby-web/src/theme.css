@@ -9253,6 +9253,27 @@ body,
     border-radius: 12px !important;
   }
   .commercial-game-card__poster img { object-position: center 35% !important; }
+  /* 热度/人数浮层：贴到卡片顶边并调透，避免压住卡片中部的游戏名 */
+  .game-live-heat-badge {
+    top: 2px !important;
+    left: 3px !important;
+    padding: 1px 5px !important;
+    background: rgba(8, 12, 22, 0.38) !important;
+    border-color: rgba(255, 167, 38, 0.3) !important;
+    font-size: 9px !important;
+    box-shadow: none !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.95) !important;
+  }
+  .game-badge-tag {
+    top: 2px !important;
+    right: 3px !important;
+    padding: 1px 5px !important;
+    background: rgba(0, 0, 0, 0.38) !important;
+    border-color: rgba(243, 207, 122, 0.3) !important;
+    font-size: 9px !important;
+    box-shadow: none !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.95) !important;
+  }
   .commercial-game-card__meta {
     position: relative !important;
     z-index: 2 !important;
