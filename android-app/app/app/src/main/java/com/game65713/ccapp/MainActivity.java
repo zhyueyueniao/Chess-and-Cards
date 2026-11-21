@@ -22,6 +22,9 @@ public class MainActivity extends Activity {
 
     // Hard-coded entry address as requested by the user.
     private static final String APP_URL = "https://game.65713.top:3333/lobby/";
+    private static final String SERVER_BASE = "https://game.65713.top:3333";
+
+    private AppUpdater appUpdater;
 
     private WebView webView;
     private ProgressBar progressBar;
@@ -117,6 +120,10 @@ public class MainActivity extends Activity {
 
         hideSystemBars();
         webView.loadUrl(APP_URL);
+
+        // 启动后延迟检查更新，避免与首屏加载竞争；检查失败静默跳过。
+        appUpdater = new AppUpdater(this, SERVER_BASE);
+        webView.postDelayed(() -> appUpdater.check(), 1500);
     }
 
     private void hideSystemBars() {

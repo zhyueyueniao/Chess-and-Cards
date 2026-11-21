@@ -2,6 +2,15 @@ plugins {
     id 'com.android.application'
 }
 
+// 版本号外置：发版脚本 publish_apk.sh 会自增并写回，APP 启动更新检查以 APK versionCode 为准
+def versionPropsFile = file('../version.properties')
+def versionProps = new Properties()
+if (versionPropsFile.canRead()) {
+    versionPropsFile.withInputStream { versionProps.load(it) }
+}
+def appVersionCode = (versionProps['versionCode'] ?: '1').toInteger()
+def appVersionName = versionProps['versionName'] ?: '1.0.1'
+
 android {
     namespace 'com.game65713.ccapp'
     compileSdk 35
@@ -10,8 +19,8 @@ android {
         applicationId 'com.game65713.ccapp'
         minSdk 23
         targetSdk 35
-        versionCode 1
-        versionName '1.0'
+        versionCode appVersionCode
+        versionName appVersionName
     }
 
     buildTypes {
