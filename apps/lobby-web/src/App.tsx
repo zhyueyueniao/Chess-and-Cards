@@ -107,6 +107,25 @@ export default function App() {
   const [view, setView] = useState<AppView>('lobby');
   const [authInitialTab, setAuthInitialTab] = useState<'login' | 'register'>('login');
 
+  // 原生 APP 返回键桥接：本应用是纯 SPA（切页不改 URL），WebView.canGoBack() 恒为 false，
+  // 因此由前端按视图层级逐级后退，并把是否消费了返回键回传给原生。
+  // 返回 true：已在本页内后退；返回 false：已在首页，原生可执行「再按一次退出」。
+  useEffect(() => {
+    const goBack = (): boolean => {
+      if (view === 'lobby') return false;
+      if (view === 'room') {
+        setView(selectedGame ? 'game_rooms' : 'lobby');
+      } else {
+        setView('lobby');
+      }
+      return true;
+    };
+    (window as any).__ccAppGoBack = goBack;
+    return () => {
+      delete (window as any).__ccAppGoBack;
+    };
+  }, [view, selectedGame]);
+
   const socketRef = useRef<GameSocket | null>(null);
   const userIdRef = useRef<string | null>(null);
   const userRef = useRef<User | null>(null);

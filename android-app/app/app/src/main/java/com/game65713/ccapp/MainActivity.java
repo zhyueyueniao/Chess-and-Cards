@@ -152,21 +152,33 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-            webView.goBack();
-            return true;
+        if (keyCode != KeyEvent.KEYCODE_BACK) {
+            return super.onKeyDown(keyCode, event);
         }
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            long now = System.currentTimeMillis();
-            if (now - lastBackPress < 2000) {
-                finish();
-            } else {
-                lastBackPress = now;
-                Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
-            }
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
+
+        // 本应用是纯 SPA（切页不改 URL），WebView.canGoBack() 恒为 false，
+        // 所以先询问前端是否能在视图栈内后退。前端返回 true 则消费本次返回键。
+        webView.evaluateJavascript(
+                "(typeof window.__ccAppGoBack === 'function') && window.__ccAppGoBack()",
+                handled -> {
+                    if ("true".equals(handled)) {
+                        return; // 前端已后退一级
+                    }
+                    // 前端无法后退（已在首页）或桥接未就绪：
+                    // 有真实历史记录则回退，否则走「再按一次退出」。
+                    if (webView.canGoBack()) {
+                        webView.goBack();
+                        return;
+                    }
+                    long now = System.currentTimeMillis();
+                    if (now - lastBackPress < 2000) {
+                        finish();
+                    } else {
+                        lastBackPress = now;
+                        Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        return true;
     }
 
     @Override
