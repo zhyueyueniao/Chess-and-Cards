@@ -50,8 +50,10 @@ public class MainActivity extends Activity {
         s.setDatabaseEnabled(true);
         s.setAllowFileAccess(false);
         s.setAllowContentAccess(false);
-        s.setLoadWithOverviewMode(true);
-        s.setUseWideViewPort(true);
+        // 尊重页面的 viewport meta（width=device-width），否则 WebView 会按桌面宽度
+        // 缩放整页，横屏下所有文字和按钮被缩得过小。
+        s.setLoadWithOverviewMode(false);
+        s.setUseWideViewPort(false);
         s.setBuiltInZoomControls(false);
         s.setDisplayZoomControls(false);
         s.setMediaPlaybackRequiresUserGesture(false);

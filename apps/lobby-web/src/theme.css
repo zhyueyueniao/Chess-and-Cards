@@ -9172,3 +9172,73 @@ body,
     scroll-behavior: auto !important;
   }
 }
+
+/* ==========================================================================
+   手机横屏极矮视口适配（APP WebView / 微信横屏）
+   只在视口高度 <= 480px 时生效；桌面布局完全不受影响。
+   修复点：卡片海报被压成 0 高度、侧栏文字逐字竖排、荷官立绘被裁成only头部。
+   ========================================================================== */
+@media (orientation: landscape) and (max-height: 480px) {
+  .lobby-main-header {
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+    padding: 0 8px !important;
+  }
+  .top-media-group { display: none !important; }
+  .top-feature-pill { padding: 3px 7px !important; font-size: 10px !important; }
+  .guest-auth-banner { min-height: 30px !important; padding: 3px 8px !important; }
+  .gfa-banner { max-height: 26px !important; overflow: hidden !important; }
+
+  .commercial-lobby-stage { padding: 3px 6px 5px !important; gap: 5px !important; }
+  .commercial-nav-rail { width: 86px !important; flex: 0 0 86px !important; gap: 4px !important; }
+  .nav-rail-icon { font-size: 15px !important; }
+  .nav-rail-label {
+    font-size: 10px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  .commercial-dealer-companion-stand {
+    width: 150px !important;
+    flex: 0 0 150px !important;
+    padding: 5px 6px !important;
+    gap: 4px !important;
+  }
+  .companion-speech-bubble { padding: 5px 7px !important; font-size: 10px !important; }
+  .companion-portrait-wrapper {
+    height: 60px !important;
+    min-height: 60px !important;
+    flex: 0 0 60px !important;
+  }
+  .companion-portrait-wrapper img { object-fit: contain !important; }
+
+  .commercial-nine-grid { gap: 5px !important; }
+  /* 关键：海报区不再允许被信息区挤压到 0 */
+  .commercial-game-card__poster {
+    flex: 1 1 auto !important;
+    min-height: 38px !important;
+  }
+  .commercial-game-card__meta { padding: 3px 5px !important; gap: 2px !important; }
+  .commercial-game-card__meta .meta-title { font-size: 11px !important; }
+  .commercial-game-card__meta .entry-stakes-text { font-size: 9px !important; }
+  .commercial-game-card__meta .btn-quick-play-gold { height: 20px !important; font-size: 10px !important; }
+  .commercial-game-card__meta .btn-choose-room-subtle { height: 20px !important; font-size: 9px !important; }
+}
+
+/* 极矮视口（APP 横屏 DPR=1 时约 400x200）：进一步压缩，并允许九宫格内部滚动 */
+@media (orientation: landscape) and (max-height: 320px) {
+  .lobby-main-header { height: 30px !important; min-height: 30px !important; max-height: 30px !important; }
+  .guest-auth-banner { display: none !important; }
+  .commercial-nav-rail { width: 64px !important; flex: 0 0 64px !important; }
+  .nav-rail-label { font-size: 9px !important; }
+  .commercial-dealer-companion-stand { width: 110px !important; flex: 0 0 110px !important; }
+  .companion-speech-bubble { display: none !important; }
+  .companion-portrait-wrapper { height: 40px !important; min-height: 40px !important; flex: 0 0 40px !important; }
+  .commercial-nine-grid-wrapper { overflow-y: auto !important; }
+  .commercial-nine-grid { grid-template-rows: repeat(3, minmax(64px, 1fr)) !important; }
+  .commercial-game-card__poster { min-height: 24px !important; }
+  .commercial-game-card__meta .meta-title { font-size: 10px !important; }
+  .commercial-game-card__meta .btn-quick-play-gold { height: 18px !important; font-size: 9px !important; }
+  .commercial-game-card__meta .btn-choose-room-subtle { height: 18px !important; font-size: 9px !important; }
+}
