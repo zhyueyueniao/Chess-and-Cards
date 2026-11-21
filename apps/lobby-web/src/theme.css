@@ -9205,6 +9205,8 @@ body,
   }
   .app-top__wallet { height: 28px !important; padding: 1px 8px !important; }
   .top-feature-pill { height: 26px !important; padding: 2px 6px !important; font-size: 10px !important; }
+  /* 顶栏过矮，福利气泡浮层伸到欢迎条上会与文字重叠挤成乱字；隐藏之（福利按钮本身保留可点） */
+  .feature-bubble-hint { display: none !important; }
   .guest-auth-banner { min-height: 26px !important; padding: 2px 8px !important; }
   .gfa-banner { max-height: 22px !important; overflow: hidden !important; }
 
@@ -9295,6 +9297,8 @@ body,
   .commercial-game-card__meta .meta-actions-row { gap: 4px !important; margin-top: 1px !important; }
   .commercial-game-card__meta .btn-quick-play-gold { height: 21px !important; font-size: 10px !important; }
   .commercial-game-card__meta .btn-choose-room-subtle { height: 21px !important; font-size: 9px !important; padding: 0 7px !important; }
+  /* 中间左右悬浮翻页箭头在矮屏很突兀，底部已有翻页按钮，直接隐藏 */
+  .carousel-arrow-btn { display: none !important; }
   .nine-grid-pagination-bar { padding: 1px 0 !important; gap: 8px !important; }
   .grid-page-nav-btn { padding: 2px 10px !important; font-size: 10px !important; }
 
