@@ -9193,7 +9193,18 @@ body,
     padding: 0 6px !important;
   }
   .top-media-group { display: none !important; }
-  .top-feature-pill { padding: 2px 6px !important; font-size: 10px !important; }
+  /* 顶栏内部元素压缩，避免头像/胶囊超出 header 底线 */
+  .app-top__left,
+  .app-top__tools { gap: 5px !important; }
+  .app-top__user { padding: 1px 8px 1px 3px !important; gap: 5px !important; }
+  .app-avatar-wrapper,
+  .app-avatar-wrapper .avatar-with-frame-container {
+    width: 26px !important;
+    height: 26px !important;
+    --af-size: 26px !important;
+  }
+  .app-top__wallet { height: 28px !important; padding: 1px 8px !important; }
+  .top-feature-pill { height: 26px !important; padding: 2px 6px !important; font-size: 10px !important; }
   .guest-auth-banner { min-height: 26px !important; padding: 2px 8px !important; }
   .gfa-banner { max-height: 22px !important; overflow: hidden !important; }
 
@@ -9212,13 +9223,13 @@ body,
   }
   .commercial-nav-rail .nav-rail-item {
     flex: 0 0 auto !important;
-    height: 38px !important;
-    min-height: 38px !important;
+    height: 42px !important;
+    min-height: 42px !important;
     padding: 2px !important;
   }
-  .nav-rail-icon { font-size: 13px !important; line-height: 1 !important; }
+  .nav-rail-icon { font-size: 16px !important; line-height: 1 !important; }
   .nav-rail-label {
-    font-size: 10px !important;
+    font-size: 11px !important;
     line-height: 1.1 !important;
     writing-mode: horizontal-tb !important;
     text-orientation: mixed !important;
@@ -9249,9 +9260,16 @@ body,
     flex: none !important;
     gap: 2px !important;
     padding: 2px 6px 5px !important;
-    background: linear-gradient(180deg, rgba(9, 12, 20, 0) 0%, rgba(9, 12, 20, 0.72) 38%, rgba(9, 12, 20, 0.96) 100%) !important;
+    background: linear-gradient(180deg, rgba(9, 12, 20, 0) 0%, rgba(9, 12, 20, 0.42) 42%, rgba(9, 12, 20, 0.72) 100%) !important;
   }
-  .commercial-game-card__meta .meta-title { font-size: 11px !important; }
+  .commercial-game-card__meta .meta-title {
+    font-size: 11px !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 6px rgba(0, 0, 0, 0.8) !important;
+  }
+  .commercial-game-card__meta .entry-stakes-text,
+  .commercial-game-card__meta .entry-speed-tag {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.95) !important;
+  }
   .commercial-game-card__meta .entry-stakes-text { font-size: 9px !important; }
   .commercial-game-card__meta .meta-actions-row { gap: 4px !important; margin-top: 1px !important; }
   .commercial-game-card__meta .btn-quick-play-gold { height: 21px !important; font-size: 10px !important; }
@@ -9306,11 +9324,24 @@ body,
     width: 100% !important;
     min-width: 0 !important;
     flex: none !important;
-    height: 22px !important;
-    font-size: 10px !important;
+    height: 24px !important;
+    font-size: 11px !important;
     padding: 0 4px !important;
     border-radius: 8px !important;
     white-space: nowrap !important;
+  }
+  /* 浮在立绘上：按钮改深实底 + 描边，避免透明看不清 */
+  .btn-random-match {
+    background: linear-gradient(135deg, rgba(38, 30, 12, 0.94) 0%, rgba(24, 18, 8, 0.96) 100%) !important;
+    border-color: rgba(243, 207, 122, 0.9) !important;
+  }
+  .btn-dealer-wardrobe {
+    background: linear-gradient(135deg, rgba(76, 29, 149, 0.94) 0%, rgba(131, 24, 102, 0.94) 100%) !important;
+    border-color: rgba(244, 114, 182, 0.9) !important;
+  }
+  .dealer-tip-widget .btn-tip-dealer-gold {
+    background: linear-gradient(135deg, rgba(136, 19, 55, 0.94) 0%, rgba(190, 18, 60, 0.94) 100%) !important;
+    border-color: rgba(251, 113, 133, 0.9) !important;
   }
 }
 
