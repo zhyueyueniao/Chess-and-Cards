@@ -37,3 +37,9 @@ tools/CcGmClient/publish/
 tools/CcGmClient/**/.gm-config.json
 
 .playwright-cli/
+
+# 手机 App 构建产物与机器本地配置，不进版本库
+android-app/棋牌大厅.apk
+android-app/app/app/build/
+android-app/app/.gradle/
+android-app/app/local.properties
