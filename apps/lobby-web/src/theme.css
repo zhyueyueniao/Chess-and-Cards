@@ -9204,6 +9204,8 @@ body,
     --af-size: 26px !important;
   }
   .app-top__wallet { height: 28px !important; padding: 1px 8px !important; }
+  /* 未登录时钱包占位文字"登录后领取"过长，把顶部按钮挤出屏幕；矮屏隐藏，登录后余额仍显示 */
+  .wallet-val--guest { display: none !important; }
   .top-feature-pill { height: 26px !important; padding: 2px 6px !important; font-size: 10px !important; }
   /* 顶栏过矮，福利气泡浮层伸到欢迎条上会与文字重叠挤成乱字；隐藏之（福利按钮本身保留可点） */
   .feature-bubble-hint { display: none !important; }

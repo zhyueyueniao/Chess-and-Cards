@@ -340,7 +340,7 @@ export function Lobby({
             </div>
             <div className="wallet-info-col">
               <span className="wallet-label">欢乐豆</span>
-              <strong className="wallet-val">{user ? user.balance.toLocaleString() : '登录后领取'}</strong>
+              <strong className={user ? 'wallet-val' : 'wallet-val wallet-val--guest'}>{user ? user.balance.toLocaleString() : '登录后领取'}</strong>
             </div>
             <span className="wallet-plus" title={user ? '领取救济金与签到' : '登录注册'}>+</span>
           </div>
