@@ -9216,10 +9216,10 @@ body,
 
   /* --- 左侧分类栏：允许滚动 + 标签强制横排 --- */
   .commercial-nav-rail {
-    width: 94px !important;
-    flex: 0 0 94px !important;
-    gap: 4px !important;
-    padding: 0 2px !important;
+    width: 108px !important;
+    flex: 0 0 108px !important;
+    gap: 6px !important;
+    padding: 0 6px !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
     -webkit-overflow-scrolling: touch !important;
@@ -9227,9 +9227,9 @@ body,
   }
   .commercial-nav-rail .nav-rail-item {
     flex: 0 0 auto !important;
-    height: 42px !important;
-    min-height: 42px !important;
-    padding: 2px !important;
+    height: 46px !important;
+    min-height: 46px !important;
+    padding: 6px !important; /* 上下左右留白加大，按钮不再贴边拥挤 */
     gap: 4px !important; /* 图标与文字贴紧些，矮屏看起来更紧凑 */
   }
   .nav-rail-icon { font-size: 16px !important; line-height: 1 !important; }
@@ -9381,7 +9381,7 @@ body,
   .commercial-game-card__meta .meta-title { font-size: 10px !important; }
   .commercial-game-card__meta .btn-quick-play-gold,
   .commercial-game-card__meta .btn-choose-room-subtle { height: 18px !important; font-size: 9px !important; }
-  .commercial-nav-rail .nav-rail-item { height: 32px !important; min-height: 32px !important; }
+  .commercial-nav-rail .nav-rail-item { height: 36px !important; min-height: 36px !important; padding: 4px !important; }
   .bubble-content { display: none !important; }
 }
 
