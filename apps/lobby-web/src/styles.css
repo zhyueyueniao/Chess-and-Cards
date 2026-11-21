@@ -17434,3 +17434,58 @@ button.secondary:hover:not(:disabled) {
   }
 }
 
+
+/* ==========================================================================
+   手机横屏 · 麻将 3D 牌桌适配（广东推倒胡等所有 mj3d 游戏通用）
+   - arena 的 min-height:460px 会撑破矮屏 viewport，导致底部手牌被裁，必须清零
+   - 牌桌 min(96vw,1240px) 过宽，收窄；手牌/工具栏压缩腾出高度
+   ========================================================================== */
+@media (max-height: 560px) {
+  .mj3d-arena {
+    height: 100% !important;
+    min-height: 0 !important;
+  }
+  /* 桌面收窄：宽度 / 高度 / 边框厚度都减小，透视重心上移 */
+  .mj3d-table-surface {
+    width: min(90vw, 960px) !important;
+    height: min(74vh, 560px) !important;
+    transform: rotateX(18deg) translateY(-8px) !important;
+    border-top-width: 10px !important;
+    border-left-width: 16px !important;
+    border-right-width: 16px !important;
+    border-bottom-width: 14px !important;
+  }
+  .mj3d-perspective-stage { padding-bottom: 40px !important; }
+  /* HUD 顶部信息条压缩 */
+  .mj3d-hud-top { top: 4px !important; left: 6px !important; gap: 6px !important; }
+  .mj3d-hud-rate { padding: 3px 9px !important; font-size: 10px !important; gap: 5px !important; }
+  /* 底部 dock 贴紧底边、缩小手牌与工具栏，确保整排牌完整可见 */
+  .mj3d-bottom-dock { bottom: 2px !important; gap: 4px !important; }
+  .mj3d-my-hand { gap: 1px !important; padding: 3px 6px !important; }
+  .mj3d-hand-tile .mahjong-tile__body img {
+    width: clamp(30px, 5vw, 52px) !important;
+    height: clamp(42px, 7vw, 72px) !important;
+  }
+  .mj3d-hand-toolbar { gap: 4px !important; padding: 3px 8px !important; }
+  .mj3d-tb-btn { padding: 3px 7px !important; font-size: 10px !important; }
+  .mj3d-advisor-bar { padding: 3px 10px !important; max-width: min(96vw, 720px) !important; }
+  .mj3d-advisor-main { font-size: 10.5px !important; gap: 5px !important; }
+  /* 左右座位/牌河收进屏幕内 */
+  .mj3d-seat-left { left: 8px !important; }
+  .mj3d-seat-right { right: 8px !important; }
+  .mj3d-river--left { left: 50px !important; width: 84px !important; }
+  .mj3d-river--right { right: 50px !important; width: 84px !important; }
+}
+
+@media (max-height: 400px) {
+  .mj3d-table-surface {
+    width: min(88vw, 900px) !important;
+    height: min(70vh, 520px) !important;
+    transform: rotateX(16deg) translateY(-4px) !important;
+  }
+  .mj3d-hand-tile .mahjong-tile__body img {
+    width: clamp(28px, 4.6vw, 44px) !important;
+    height: clamp(38px, 6.4vw, 60px) !important;
+  }
+  .mj3d-perspective-stage { padding-bottom: 32px !important; }
+}

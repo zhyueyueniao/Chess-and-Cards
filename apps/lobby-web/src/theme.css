@@ -9395,3 +9395,47 @@ html.cc-app .btn-guest-oauth,
 html.cc-app .profile-oauth-bind-row {
   display: none !important;
 }
+
+/* ==========================================================================
+   手机横屏 · 游戏房间（Room）适配 —— 所有游戏通用
+   房间页不走大厅的 nav-rail/nine-grid 规则，需单独压缩顶栏与荷官浮层
+   （WebView 锁横屏，orientation 查询失效，一律用 max-height）
+   ========================================================================== */
+@media (max-height: 560px) {
+  /* 顶栏 56px 过高，压缩到 36px；同步扣减 viewport，给牌桌让出高度 */
+  .room-topbar {
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    padding: 0 8px !important;
+  }
+  .room-viewport {
+    height: calc(100dvh - 36px) !important;
+    max-height: calc(100dvh - 36px) !important;
+  }
+  /* 顶栏内部元素压缩，避免挤在一行溢出 */
+  .room-info-pill,
+  .round-badge,
+  .room-players-btn,
+  .room-rules-btn,
+  .room-invite-btn,
+  .room-wallet-badge {
+    font-size: 10px !important;
+    padding: 1px 7px !important;
+    gap: 3px !important;
+    height: auto !important;
+  }
+  .room-no,
+  .room-status-label { font-size: 9.5px !important; }
+  .room-topbar__right { gap: 6px !important; }
+  .room-wallet-badge strong { font-size: 11px !important; }
+  .luxury-back-btn { height: 26px !important; padding: 0 8px !important; font-size: 10px !important; }
+  .room-self-avatar-chip { transform: scale(0.78) !important; transform-origin: right center !important; }
+  /* 右上角荷官横条整块隐藏：横屏顶部空间紧张且横跨遮挡牌桌 */
+  .room-dealer-companion { display: none !important; }
+}
+
+@media (max-height: 400px) {
+  .room-topbar { height: 30px !important; min-height: 30px !important; max-height: 30px !important; }
+  .room-viewport { height: calc(100dvh - 30px) !important; max-height: calc(100dvh - 30px) !important; }
+}

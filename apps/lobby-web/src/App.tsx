@@ -233,6 +233,12 @@ export default function App() {
         sessionStorage.removeItem('cc.updated_notice');
         window.setTimeout(() => {
           setToast(`🎉 平台升级完成！${Number(updatedCoins).toLocaleString()} 欢乐豆更新补偿已发至信箱，请前往领取！`);
+          // 与 showToast 共用定时器：连续提示先清旧定时器，并在 5 秒后自动收起
+          if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
+          toastTimerRef.current = window.setTimeout(() => {
+            toastTimerRef.current = null;
+            setToast(null);
+          }, 5000);
         }, 500);
       }
     } catch {
