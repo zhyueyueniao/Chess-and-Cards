@@ -9,6 +9,7 @@ import {
   type Settlement,
 } from '@cc/protocol';
 import { api, getToken, setToken, type User } from './api';
+import { isNativeApp } from './appEnv';
 import { audio } from './audio';
 import { gameUnavailableToast, isGameJoinable } from './gameAvailability';
 import { GameSocket } from './ws';
@@ -106,6 +107,51 @@ export default function App() {
   // 全屏视图状态流转 (彻底消除弹窗)
   const [view, setView] = useState<AppView>('lobby');
   const [authInitialTab, setAuthInitialTab] = useState<'login' | 'register'>('login');
+
+  // APP 环境标记：给 <html> 加 cc-app，用于 CSS 隐藏网页端才需要的第三方 OAuth 入口等。
+  useEffect(() => {
+    if (isNativeApp()) document.documentElement.classList.add('cc-app');
+    else document.documentElement.classList.remove('cc-app');
+  }, []);
+
+  // 前端资源版本自检：原生 APP 切后台/返回首页后 WebView 不重新 loadUrl，
+  // 发版后用户看到的仍是旧资源。这里在页面重新可见时拉取线上 index.html 的构建版本号，
+  // 发现变化即自动 reload，让用户无需强制杀进程就能拿到新版本。
+  useEffect(() => {
+    if (!isNativeApp()) return;
+    const current = document.querySelector('meta[name="cc-build"]')?.getAttribute('content') ?? '';
+    if (!current) return;
+    let lastCheck = 0;
+    const check = async (): Promise<void> => {
+      const now = Date.now();
+      if (now - lastCheck < 4000) return; // 节流，避免频繁切换反复请求
+      lastCheck = now;
+      try {
+        const res = await fetch(`${window.location.origin}/lobby/?_v=${now}`, {
+          cache: 'no-store',
+          headers: { 'Cache-Control': 'no-cache' },
+        });
+        const html = await res.text();
+        const match = html.match(/<meta\s+name=["']cc-build["']\s+content=["']([^"']+)["']/);
+        if (match && match[1] && match[1] !== current) {
+          window.location.reload();
+        }
+      } catch {
+        /* 网络失败静默跳过 */
+      }
+    };
+    const onVisible = (): void => {
+      if (document.visibilityState === 'visible') void check();
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    window.addEventListener('pageshow', onVisible);
+    window.addEventListener('focus', onVisible);
+    return () => {
+      document.removeEventListener('visibilitychange', onVisible);
+      window.removeEventListener('pageshow', onVisible);
+      window.removeEventListener('focus', onVisible);
+    };
+  }, []);
 
   // 原生 APP 返回键桥接：本应用是纯 SPA（切页不改 URL），WebView.canGoBack() 恒为 false，
   // 因此由前端按视图层级逐级后退，并把是否消费了返回键回传给原生。
@@ -521,7 +567,7 @@ export default function App() {
 
     if (!user || !socketRef.current) {
       pendingJoinRef.current = game;
-      requireLogin('register', '请先登录或创建账号，或使用奇幻维度账号一键登录！');
+      requireLogin('register', isNativeApp() ? '请先登录或创建账号后再进入游戏！' : '请先登录或创建账号，或使用奇幻维度账号一键登录！');
       return;
     }
 

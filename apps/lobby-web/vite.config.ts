@@ -32,8 +32,22 @@ function computeBgmHashes(): Record<string, string> {
   return out;
 }
 
+/** 构建版本号写入 index.html 的 <meta name="cc-build">，供 APP 前台恢复时检测前端资源是否有更新 */
+const BUILD_ID = `${Date.now()}-${crypto.createHash('sha1').update(JSON.stringify({ at: Date.now(), rand: Math.random() })).digest('hex').slice(0, 8)}`;
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    {
+      name: 'inject-build-version',
+      transformIndexHtml(html) {
+        return html.replace(
+          '<meta name="theme-color" content="#0b0f1e" />',
+          `<meta name="theme-color" content="#0b0f1e" />\n    <meta name="cc-build" content="${BUILD_ID}" />`,
+        );
+      },
+    },
+  ],
   base: BASE,
   define: {
     __BGM_HASH__: JSON.stringify(computeBgmHashes()),

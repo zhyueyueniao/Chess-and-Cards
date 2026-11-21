@@ -9384,3 +9384,14 @@ body,
   .commercial-nav-rail .nav-rail-item { height: 32px !important; min-height: 32px !important; }
   .bubble-content { display: none !important; }
 }
+
+/* ==========================================================================
+   APP（原生 WebView）内隐藏「奇幻维度」第三方 OAuth 相关内容
+   仅 html.cc-app 生效，网页端完全不受影响。对应元素由 App.tsx 检测 UA 加类。
+   ========================================================================== */
+html.cc-app .btn-oauth-fantasyclaw,
+html.cc-app .auth-oauth-divider,
+html.cc-app .btn-guest-oauth,
+html.cc-app .profile-oauth-bind-row {
+  display: none !important;
+}

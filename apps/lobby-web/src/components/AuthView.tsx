@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import { api, fantasyClawOAuthStartUrl, type Captcha, type User } from '../api';
+import { getRememberedAccount, isNativeApp, rememberAccount } from '../appEnv';
 import { audio } from '../audio';
 import { IconBack, IconCrown, IconSparkle } from './Icons';
 
@@ -27,6 +28,12 @@ export function AuthView({ initialTab = 'login', onSuccess, onBack }: Props) {
   useEffect(() => {
     setTab(initialTab);
   }, [initialTab]);
+
+  // APP 环境记住上次登录账号，免去每次重新输入（不记密码）
+  useEffect(() => {
+    const saved = getRememberedAccount();
+    if (saved) setUsername(saved);
+  }, []);
 
   // 找回密码表单状态
   const [resetAccount, setResetAccount] = useState('');
@@ -101,6 +108,8 @@ export function AuthView({ initialTab = 'login', onSuccess, onBack }: Props) {
               inviteCode.trim() || undefined,
             );
       audio.play('coin');
+      // APP 环境记住账号名（仅账号，不含密码），下次打开自动填入
+      if (isNativeApp() && tab === 'login' && username.trim()) rememberAccount(username.trim());
       onSuccess(result.token, result.user);
     } catch (err) {
       setError(err instanceof Error ? err.message : '操作失败');
