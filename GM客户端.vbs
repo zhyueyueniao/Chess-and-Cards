@@ -1,4 +1,4 @@
-' Chess and Cards GM 运营管理中台无黑框启动脚本
+' Chess and Cards GM client launcher (pure ASCII, WSH-safe)
 Set ws = CreateObject("WScript.Shell")
 Set fso = CreateObject("Scripting.FileSystemObject")
 currentDir = fso.GetParentFolderName(WScript.ScriptFullName)
@@ -14,5 +14,7 @@ ElseIf fso.FileExists(exeRel) Then
 ElseIf fso.FileExists(exeDbg) Then
     ws.Run """" & exeDbg & """", 1, False
 Else
-    ws.Run "cmd /c """ & currentDir & "\GM工具.bat""", 1, False
+    '"GM" + Chinese "tool/batch" + ".bat" built via ChrW to stay pure ASCII
+    batName = "GM" & ChrW(24037) & ChrW(20855) & ".bat"
+    ws.Run "cmd /c """ & currentDir & "\" & batName & """", 1, False
 End If

@@ -1,7 +1,7 @@
-# syntax=docker/dockerfile:1.7
+# syntax directive removed: docker.io unreachable locally, only standard features used
 # 多阶段构建：一次构建同时产出后端运行镜像 (runtime) 与前端 Nginx 静态镜像 (web)
 
-FROM node:22-alpine AS base
+FROM docker.m.daocloud.io/library/node:22-alpine AS base
 WORKDIR /app
 # 启用 pnpm 并配置国内高速镜像源（构建快 3-5 倍）
 ARG NPM_REGISTRY=https://registry.npmmirror.com
@@ -52,7 +52,7 @@ EXPOSE 8080 9000
 CMD ["pnpm", "--filter", "@cc/api-server", "start"]
 
 # ---------- 4. 前端 + 内置反代入口镜像 (1Panel 网站只需反代这一个端口) ----------
-FROM nginx:1.27-alpine AS web
+FROM docker.m.daocloud.io/library/nginx:1.27-alpine AS web
 COPY infra/nginx-docker.conf /etc/nginx/conf.d/default.conf
 COPY --from=web-builder /app/apps/lobby-web/dist /usr/share/nginx/html/lobby
 EXPOSE 80
